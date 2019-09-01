@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="angular.min.js"></script>
+<style>
+body{ background: linear-gradient(to right, #2196f3, #f44336);}
+
+	.ribbon {
+   position: relative;
+   margin-top: 20px;
+   margin-left: 1200px;
+}
+	.ribbon1 {
+   position: relative;
+   margin-top: -100px;
+   margin-left: 100px;
+}	
+</style>
+
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebase/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCyOh83-uF2M9KH_PNB6TiMJF4CV-PaDBU",
+    authDomain: "my-project2web.firebaseapp.com",
+    databaseURL: "https://my-project2web.firebaseio.com",
+    projectId: "my-project2web",
+    storageBucket: "",
+    messagingSenderId: "235856998024",
+    appId: "1:235856998024:web:7991cf28f3112f44"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<script>
+  $(document).ready(function(){
+    var i=0;
+    $("#b1").click(function(){
+          
+          
+
+          firebase.database().ref().child('attendance').on('value', function(snapshot){
+            var sotp = snapshot.child('OTP').val();
+            var lect = snapshot.child('Lecture').val();
+            check(sotp,lect);
+          });
+
+          function check(sotp,lect)
+          {
+            var cid = $("#cd").val();
+            var topt = $("#opt").val();
+            if(sotp == topt)
+            {
+             firebase.database().ref("day1").child("present"+i).set({cid,lect}); 
+             i++;
+             alert("Marked Present!");
+            }
+            else
+              alert("Wrong OTP!");
+          }
+
+        
+    });
+    $("#b2").click(function(){
+      var tid=$("#td").val();
+      var tpswd=$("#tp").val();
+    });
+  });
+</script>
+
+
+
+	
+		
+
+    <div id="content">
+   <img src="clogo.jpg" class="ribbon" style="height: 75px;width: 200px;">
+   <img src="sup.png" class="ribbon1" style="height: 75px;width: 200px;">
+</div>
+
+
+
+	<div class="container">
+ <center><h1 style="color:#8B0000; font-variant: small-caps;font-size: 50px;font-weight: bold;" >Attendance Management Portal </h1></center>
+</div>
+<br><br><br>
+<div class="container-fluid">
+	<nav class="navbar">
+   
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active" style="font-size: 25px;"><a href="home.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+      <li class="dropdown" style="font-size: 25px;"><a href="index.html"><span class="glyphicon glyphicon-user"></span> About Us </a>
+        
+      </li>
+      <li><a href="#" style="font-size: 25px;"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+</nav>
+
+</div>
+<br><br><br>
+<center><div style="height: 300px; width: 1200px;background-color: #1B2629;" >
+<div class="row">
+
+	<div class="col-lg-4">
+		<br><br>
+		<center><span style="font-size: 30px; color: white;">Student login</span> <br><br> <button class=" btn btn-success" data-toggle="modal" data-target="#myModal2">Login To Mark Attendence</button></center>
+
+           
+             <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+          <div class="modal-content">
+          	 <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter your id</h4>
+        </div>
+        
+        <div class="modal-body">
+        <input style="width: 90%; " type="text" id="cd" placeholder="Enter your College id" class="form-control"><br>
+        <input style="width: 90%; " type="number" id="opt" placeholder="Enter OTP" maxlength="4" class="form-control">  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" id="b1">Submit</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+	</div>
+<div class="col-lg-4">
+		<br><br>
+		<center><span style="font-size: 30px; color: white;">Teacher login</span> <br><br> <button class=" btn btn-success" data-toggle="modal" data-target="#myModal1">Login To get Attendence</button></center><br><br>
+		
+
+		           
+             <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+          <div class="modal-content">
+          	 <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter your id</h4>
+        </div>
+        
+        <div class="modal-body">
+        <input style="width: 90%; " type="text" id="td" placeholder="Enter your teacher id" class="form-control"><br>
+         <input style="width: 90%; " type="password" id="tp" placeholder="Enter your Password" class="form-control">  
+        </div>
+        <div class="modal-footer">
+        <a href="teacher.html">  <button type="button" class="btn btn-success" id="b2"> Submit</button></a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+      
+                 <div class="modal fade" id="myModal4" role="dialog">
+    <div class="modal-dialog">
+          <div class="modal-content">
+          	 <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Enter your id</h4>
+        </div>
+        
+        <div class="modal-body">
+        <input style="width: 90%; " type="text" id="td" placeholder="Enter your student id" class="form-control"><br>
+         <input style="width: 90%; " type="number" id="tp" placeholder="Enter your Password" maxlength="4" class="form-control">  
+        </div>
+        <div class="modal-footer">
+        <a href="student.html">  <button type="button" class="btn btn-success" id="b2"> Submit</button></a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+	</div>
+	<div class="col-lg-4">
+		<br><br>
+		<center><span style="font-size: 30px; color: white;">Admin login</span> <br><div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+      <input id="email" type="text" class="form-control" name="email" placeholder="Email" style="width: 90%;">
+    </div><br>
+		<span style="font-size: 30px; color: white;">Password</span> <br>
+		   <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+      <input id="password" type="password" class="form-control" name="password" placeholder="Password" style="width: 90%;">
+    </div><br>
+ <a href="admin.html">    <button type="button" class="btn btn-success" id="b3"> Login </button></a>
+	</center>
+	</div>
+</div>
+
+
+ </div></center>
+ <br><br><br>
+</body>
+</html>

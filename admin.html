@@ -1,0 +1,285 @@
+<!doctype html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="angular.min.js"></script>
+<style>
+	#tlist,#uprfl{
+		display :none;
+	}
+</style>
+<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebase/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCyOh83-uF2M9KH_PNB6TiMJF4CV-PaDBU",
+    authDomain: "my-project2web.firebaseapp.com",
+    databaseURL: "https://my-project2web.firebaseio.com",
+    projectId: "my-project2web",
+    storageBucket: "",
+    messagingSenderId: "235856998024",
+    appId: "1:235856998024:web:7991cf28f3112f44"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+$(document).ready(function(){
+  var i=0;
+	$("#ltadd").click(function(){
+		$("#tadd").show();
+		$("#tlist").hide();
+		$("#uprfl").hide(); 
+	});
+	$("#luprfl").click(function(){
+		$("#tadd").hide();
+		$("#tlist").hide();
+		$("#uprfl").show();
+	});
+	$("#ltlist").click(function(){
+		$("#tadd").hide();
+		$("#tlist").show();
+		$("#uprfl").hide();
+	});
+  $("#shwattn").click(function(){
+    $("#tadd").hide();
+    $("#tlist").hide();
+    $("#uprfl").hide();
+  });
+  $("#b1").click(function(){
+  		var p1=$("#pwd").val();
+  		var p2=$("#cpwd").val();
+  		if(p1!=p2){
+  			alert("Please Confirm the password");
+  		}
+  		var n=$("#name").val();
+  		var tidv=$("#tid").val();
+  		var e =$("#email").val();
+  		var pswd=$("#pwd").val();
+
+      firebase.database().ref("teachers").child("t"+i).set({n,tidv,e,pswd});
+      i++;
+      retteacher(i);
+      alert("Teacher successfully added!");
+  });
+
+  function retteacher(i)
+  {
+    firebase.database().ref("teachers").child('t'+i).on('value', function(snapshot){
+            nf = snapshot.child('n').val();
+            tidvf = snapshot.child('tidv').val();
+            ef = snapshot.child('e').val();
+            pswdf = snapshot.child('pswd').val();
+
+            $("#myTable").append("<tr><td>"+nf+"</td><td>"+tidvf+"</td><td>"+ef+"</td><td>"+pswdf+"</td></tr>");
+          });
+  }
+
+  
+
+  $("#cngpw").click(function(){
+    var pwd = $("#pwd").val();
+    var cpwd = $("#cpwd").val();
+
+    if(pwd == cpwd)
+      alert("Password Changed!");
+    else
+      alert("Passwords donot match!");
+  })
+
+});
+</script>
+</head>
+<body style="background-color: ivory;">
+	<center><h1>Hello Admin! </h1></center>
+	<br><br>
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header" >
+      <a class="navbar-brand" href="#" id="luprfl">User Profile</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#" id="ltadd" >New Record </a></li>
+      <li ><a href="#" id="ltlist">Record list</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+<div id="tadd">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" placeholder="Enter name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="id" >Teacher's Id:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="tid" placeholder="Enter the Id...">
+      </div>
+    </div>
+        <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd"> Coinfirm Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="cpwd" placeholder="Coinfirm Password">
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-success" id="b1">Add Record</button>
+      </div>
+    </div>
+    </form>
+</div>
+<div id="uprfl">
+  <div class="row">
+    <div class="col-md-2">
+<img src="admin.png">
+</div>
+<div class="col-md-10">
+  
+  <br>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name:</label>
+      <div class="col-sm-10">          
+        <span id="name">Chitkara University Administration</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">          
+       <p id="email">admin@chitkara.edu.in</p>
+      </div>
+    </div>
+ <br><br><br><br>
+
+   <span style="font-weight: bold; font-size: 25px; margin-left: 100px">Change Password:</span><br><br>
+
+   
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="cpw">Current Password:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="cpw" placeholder="Enter current password" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="npw">New Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="npw" placeholder="New Password" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="cnpw">Confirm New Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="cnpw" placeholder="Confirm New Password" required>
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-primary" id="cngpw">Change Password</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+</div>
+</div>
+
+
+
+
+<div id="tlist">
+	<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<form class="form-horizontal">
+<div class="form-group">
+      <label class="control-label col-sm-2" > Search:</label>
+      <div class="col-sm-10"> 
+<input type="text" class="form-control" id="myInput" placeholder="Search.." style="width: 80%;">
+</div>
+</div>
+</form>
+
+	<table class="table table-striped" id="k">
+		<tr>
+			<th>Name</th>
+			<th>Id</th>
+			<th>Email</th>
+			<th>Password</th>
+		</tr>
+		<tbody id="myTable">
+			
+		
+		<tr>
+			<td>Shweta Thakur</td>
+			<td>STC</td>
+			<td>shwetathakur09@gmail.com</td>
+			<td>SHWEC#19</td>
+
+		</tr>
+		<tr>
+			<td>Sarabjeet Kaur</td>
+			<td>SRKW</td>
+			<td>sharabjeet.kaur15@gmail.com</td>
+			<td>SARABW#19</td>
+
+		</tr>
+		<tr>
+			<td>Navjeet Kaur</td>
+			<td>NVKW</td>
+			<td>navjeetkaur03@gmail.com</td>
+			<td>NAVJWT#19</td>
+
+		</tr>
+		</tbody>
+	</table>
+
+</div>
+
+<div id="hwattn">
+
+
+
+</div>
+
+
+</body>
+</html>

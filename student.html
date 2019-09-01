@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"  href="style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="angular.min.js"></script>
+<style>
+
+  body{ background: linear-gradient(to right, #2196f3, #f44336);}
+
+	.ribbon {
+   position: relative;
+   margin-top: 20px;
+   margin-left: 1200px;
+}
+	.ribbon1 {
+   position: relative;
+   margin-top: -100px;
+   margin-left: 100px;
+}	
+ #sm,#sa,#sg{
+  display: none;
+ }
+</style>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+           ['Present',     11],
+          ['Absent',      2]
+        ]);
+
+        var options = {
+          title: 'Maths Attendence'
+        };
+
+         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Present',     20],
+          ['Absent',      1]
+          
+        ]);
+
+        var options = {
+          title: 'IOT Attendence'
+        };
+
+          var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+            ['Present',     30],
+          ['Absent',      5]
+        ]);
+
+        var options = {
+          title: 'Web Tech Attendence'
+        };
+
+         var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+            ['Present',     30],
+          ['Absent',      3]
+        ]);
+
+        var options = {
+          title: 'C Attendence'
+        };
+
+         var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#lsi").click(function(){
+          $("#si").show();
+          $("#sa").hide();
+          $("#sm").hide();
+          $("#sg").hide();
+        });
+          $("#lsa").click(function(){
+          $("#si").hide();
+          $("#sa").show();
+          $("#sm").hide();
+          $("#sg").hide();
+        });
+
+            $("#ldm").click(function(){
+          $("#si").hide();
+          $("#sa").hide();
+          $("#sm").show();
+          $("#sg").hide();
+        });
+              $("#ldp").click(function(){
+          $("#si").hide();
+          $("#sa").hide();
+          $("#sm").hide();
+          $("#sg").show();
+        });
+      });
+    </script>
+   
+
+</head>
+<body>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebase/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+		
+<center><h1><b> Welcome Student !</b></h1></center>
+<br><br>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand active" href="#" id="lsi">Student Info</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#" id="lsa">Show attendence</a></li>
+      <li><a href="#" id="ldm">Display Marks</a></li>
+      <li><a href="#" id="ldp">Display Grade Point</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#" ><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+<div id="si">
+<br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4"><img src="admin.jpg"</div>
+    </div>
+      <div class="col-sm-8">
+      <div class="row">
+      <div class="col-sm-6"> 
+       <span style="font-size:25px">Student name : <b>Keshav jain</b> </span><br><br>
+       <span style="font-size:25px">Student Id : <b>1810991205</b> </span><br><br>
+       <span style="font-size:25px">Email : <b>keshavjain231@gmail.com</b> </span><br><br>
+       <span style="font-size:25px">Phone Number :<b>9812547856</b> </span>
+     </div>
+      <div class="col-sm-6"> 
+       <span style="font-size:25px">Father's name : <b>R k Jain</b> </span><br><br>
+       <span style="font-size:25px">Email : <b>rkjain@gmail.com</b> </span><br><br>
+       <span style="font-size:25px">Phone Number :<b>9812456214</b> </span>
+     </div>
+     </div>
+</div>
+    </div>
+  </div>
+</div>
+<br><br>
+<div id="sa">
+  <center>
+  <div class="row">
+    <div class="col-sm=3">
+   <div id="piechart" > </div>
+ </div>
+          <div class="col-sm=3">
+   <div id="piechart1"></div>
+ </div>
+    <div class="col-sm=3">
+   <div id="piechart2"></div>
+ </div>
+    <div class="col-sm=3">
+   <div id="piechart3"></div>
+ </div>
+
+   </div>
+ </center>
+ </div>
+ <br><br>
+
+ <div id="sm"> 
+        
+    
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+        ["Maths", 80, "#b87333"],
+        ["IOT", 75, "silver"],
+        ["Web Tech", 78, "gold"],
+        [" Intro to C", 85, "color: #e5e4e2"]
+      ]);
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Score",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
+<center><div id="barchart_values" style="width: 1000px; height: 500px; background-color: white;"></div></center>
+
+        </div>
+
+        <br><br>
+        <div id="sg" style="width:100%;height: 100%; background-color: white;">
+            <table class="table table striped">
+              <tr>
+                <th>Subject</th>
+                <th>Credit</th>
+                <th>Grade Info</th>
+              </tr>
+              <tr>
+                <td>C</td>
+                <td>5.0</td>
+                <td>8.6</td>
+              </tr>
+              <tr>
+                <td>Web Tech</td>
+                <td>5.0</td>
+                <td>9.0</td>
+              </tr>
+              <tr>
+                <td>IOT</td>
+                <td>2.0</td>
+                <td>7.8</td>
+              </tr>
+              <tr>
+                <td>Maths</td>
+                <td>4.0</td>
+                <td>8.2</td>
+              </tr>
+
+            </table>
+            Total Grade Point : <span ><b>8.4</b></span>
+        </div>
+
+</body>
+</html>

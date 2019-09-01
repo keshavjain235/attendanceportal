@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="angular.min.js"></script>
+
+<style>
+  
+
+
+</style>
+</head>
+<body style="background-color: ivory">
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebase/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebase/6.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCyOh83-uF2M9KH_PNB6TiMJF4CV-PaDBU",
+    authDomain: "my-project2web.firebaseapp.com",
+    databaseURL: "https://my-project2web.firebaseio.com",
+    projectId: "my-project2web",
+    storageBucket: "",
+    messagingSenderId: "235856998024",
+    appId: "1:235856998024:web:7991cf28f3112f44"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  
+$(document).ready(function(){
+
+  $("#gnotp").click(function(){
+
+      //$("#ul1").empty();
+
+      var num1=$("#otp").val();
+      var lect = $("#lect").val();
+      var t = $("#time").val();
+
+      if(num1.toString().length < 6)
+      {
+        alert("Please enter OTP of more than 6 digits!");
+      }
+      else if(num1.toString().length > 8)
+      {
+        alert("OTP can't be more than 8 digits!");
+      }
+      else
+      {
+        if(t<15 || t>60)
+        {
+          alert("Enter correct Time!");
+        }
+        else
+        {
+        alert("OTP generated!");
+
+        firebase.database().ref("attendance").set({
+            Lecture: lect,
+            OTP: num1
+        });
+        
+        function set(){
+        firebase.database().ref("attendance").set({
+            Lecture: 0,
+            OTP: -999
+        });
+      }
+    }
+
+      setTimeout(set, t*1000);
+
+      function get()
+      {
+      var k=0;
+      var roll=new Array();
+
+      for(var i=0 ; i<10 ; i++) {
+
+      firebase.database().ref().child('day1/present'+i).on('value', function(snapshot){
+            roll[i] = snapshot.child('cid').val();
+
+            if(roll[i] == null)
+              k=1;
+            if(k!=1)
+            $("#ul1").append("<li>"+roll[i]+"</li>");
+            
+          });
+if(k==1)
+  break;
+
+    }
+
+      }
+
+        setTimeout(get, (t+2)*1000); 
+
+      }
+
+    });
+});
+ 
+ </script>
+
+
+
+<center><h1 style="font-weight: bold;">Hello Mam/Sir!</h1></center>
+
+<br><br>
+
+<div class="container">
+  <h4>Your Schedule:</h4>
+  <table class="table table-striped">
+    <tr>
+      <td></td><th>1<br></th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th>
+    </tr>
+    <tr>
+      <th>Monday</th><td>ED-LH3 || M-02</td><td>TG-203 || H-01</td><td>-</td><td>NB-307 || A-02</td><td>ED-LH1 || C-02</td><td> - </td><td>NB-104 || G-01</td><td>FM-005 || Z-02</td>
+    </tr>
+    <tr>
+      <th>Tuesday</th><td>-</td><td>NB-301||N-01</td><td>ED Inlingua</td><td>FM-005 || Z-02</td><td>-</td><td>PH-103 || F-02</td><td>ED-LH4 || J-01</td><td>TG-410 || X-01</td>
+    </tr>
+    <tr>
+      <th>Wednesday</th><td>NB-204 || Y-02</td><td>ED-LH2 || S-02</td><td>TG-204 || Q-01</td><td>-</td><td>-</td><td>-</td><td>ED Inlingua </td><td>NB-204 || I-02</td>
+    </tr>
+    <tr>
+      <th>Thursday</th><td>ED-LH3 || M-02</td><td>TG-203 || H-01</td><td>-</td><td>NB-307 || A-02</td><td>ED-LH1 || C-02</td><td>-</td><td>NB-104 || G-01</td><td>TG-504 || T-02</td>
+    </tr>
+    <tr>
+      <th>Friday</th><td>-</td><td>-</td><td>NB-204 || Y-02</td><td>ED Inlingua</td><td>FM-005 || Z-02</td><td>FM-005 || Z-02</td><td>-</td><td>-</td>
+    </tr>
+
+  </table>
+</div>
+
+<br> <br>
+<div class="container"><center>
+  Select Lecture: <select id="lect"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+  <br><br>
+  Enter OTP: <input type="number" maxlength="8" id="otp">
+  <br><br>
+  Enter Validity: <input type="number" id="time" placeholder="Enter between 15-60 sec">
+  <br><br>
+  <button class="btn btn-primary" id="gnotp">Generate OTP</button>
+</center>
+</div>
+
+<br><br>
+<div class="container-fluid" style="margin-left: 150px;">
+  <h4>List of present Students: </h4>
+  <ul id="ul1">
+  </ul>
+</div>
+
+
+
+</body>
+</html>
